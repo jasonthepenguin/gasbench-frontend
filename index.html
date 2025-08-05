@@ -29,15 +29,74 @@
           <p class="sub">A rigorous, scenario‑driven suite to evaluate planning, tool use, safety, and cost under real‑world constraints.</p>
         </section>
 
-        <section class="features">
-          <div class="feature">
-            <h3>Operational Scenarios</h3>
-            <p>Simulates inventory, pricing, scheduling, maintenance, and customer support tasks with tool APIs.</p>
-          </div>
-          <div class="feature">
-            <h3>Agent Metrics</h3>
-            <p>Tracks profit, successful tool calls, and violations of store policies for clear, comparable evaluations.</p>
-          </div>
+
+        <section class="leaderboard" aria-label="LLM Model Leaderboard">
+          <h2>Model Leaderboard</h2>
+          <ol class="lb-list">
+            <li class="lb-item">
+              <div class="lb-rank" aria-label="Rank 1"><span>#1</span></div>
+              <div class="lb-main">
+                <div class="lb-title">
+                  <span class="lb-name">GPT4.1</span>
+                  <span class="badge badge-best">best non-failing%</span>
+                  <span class="badge badge-lowest">lowest API calls</span>
+                </div>
+                <div class="lb-metrics">
+                  <span class="metric"><label>API calls</label><strong>38</strong></span>
+                  <span class="metric"><label>Non-failing</label><strong>69.6%</strong></span>
+                </div>
+              </div>
+            </li>
+            <li class="lb-item">
+              <div class="lb-rank" aria-label="Rank 2"><span>#2</span></div>
+              <div class="lb-main">
+                <div class="lb-title">
+                  <span class="lb-name">Sonnet 4</span>
+                </div>
+                <div class="lb-metrics">
+                  <span class="metric"><label>API calls</label><strong>40</strong></span>
+                  <span class="metric"><label>Non-failing</label><strong>66.7%</strong></span>
+                </div>
+              </div>
+            </li>
+            <li class="lb-item">
+              <div class="lb-rank" aria-label="Rank 3"><span>#3</span></div>
+              <div class="lb-main">
+                <div class="lb-title">
+                  <span class="lb-name">Opus 4</span>
+                </div>
+                <div class="lb-metrics">
+                  <span class="metric"><label>API calls</label><strong>52</strong></span>
+                  <span class="metric"><label>Non-failing</label><strong>68%</strong></span>
+                </div>
+              </div>
+            </li>
+            <li class="lb-item">
+              <div class="lb-rank" aria-label="Rank 4"><span>#4</span></div>
+              <div class="lb-main">
+                <div class="lb-title">
+                  <span class="lb-name">GPT-4o</span>
+                </div>
+                <div class="lb-metrics">
+                  <span class="metric"><label>API calls</label><strong>51</strong></span>
+                  <span class="metric"><label>Non-failing</label><strong>51.5%</strong></span>
+                </div>
+              </div>
+            </li>
+            <li class="lb-item">
+              <div class="lb-rank" aria-label="Rank 5"><span>#5</span></div>
+              <div class="lb-main">
+                <div class="lb-title">
+                  <span class="lb-name">Horizon Beta</span>
+                  <span class="badge badge-worst">lowest non-failing%</span>
+                </div>
+                <div class="lb-metrics">
+                  <span class="metric"><label>API calls</label><strong>48</strong></span>
+                  <span class="metric"><label>Non-failing</label><strong>50%</strong></span>
+                </div>
+              </div>
+            </li>
+          </ol>
         </section>
       </main>
 
@@ -46,6 +105,8 @@
       </footer>
     </div>
 
-    
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
   </body>
 </html>
