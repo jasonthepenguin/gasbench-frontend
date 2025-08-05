@@ -20,6 +20,8 @@ body {
               radial-gradient(800px 600px at 10% 20%, rgba(61, 220, 151, 0.12), transparent 50%),
               var(--bg);
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .page-wrap {
@@ -110,6 +112,13 @@ body {
 /* Leaderboard */
 .leaderboard { margin-top: 32px; }
 .leaderboard h2 { margin: 0 0 12px; font-size: 22px; letter-spacing: -0.01em; }
+.leaderboard-explanation { 
+  color: var(--muted); 
+  margin: 0 0 20px; 
+  font-size: 14px; 
+  line-height: 1.6;
+  max-width: 700px;
+}
 .lb-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
 .lb-item {
   display: grid;
@@ -152,11 +161,159 @@ body {
 .badge-best { background: rgba(61, 220, 151, 0.12); color: var(--brand); border-color: rgba(61, 220, 151, 0.35); }
 .badge-lowest, .badge-worst { background: rgba(255, 90, 95, 0.12); color: var(--danger); border-color: rgba(255, 90, 95, 0.35); }
 
+/* Model Explanations */
+.model-explanations { margin-top: 32px; }
+.model-explanations h2 { margin: 0 0 12px; font-size: 22px; letter-spacing: -0.01em; }
+.explanations-intro { 
+  color: var(--muted); 
+  margin: 0 0 20px; 
+  font-size: 14px; 
+  line-height: 1.6;
+  max-width: 700px;
+}
+.explanation-grid { display: grid; gap: 16px; }
+.explanation-item {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 18px;
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.explanation-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 14px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.explanation-item h3 { 
+  margin: 0 0 8px; 
+  font-size: 16px; 
+  font-weight: 800; 
+  letter-spacing: -0.01em; 
+  color: var(--text);
+}
+.explanation-item p { 
+  margin: 0; 
+  color: var(--muted); 
+  line-height: 1.6; 
+  font-size: 14px;
+}
+.explanation-item strong { color: var(--text); }
+
 /* Responsive */
-@media (max-width: 860px) {
-  .features { grid-template-columns: 1fr; }
-  .countdown { grid-auto-flow: row; grid-template-columns: repeat(4, 1fr); }
-  .lb-item { grid-template-columns: 44px 1fr; padding: 12px; }
+@media (max-width: 1024px) {
+  .hero { padding: 32px 0 8px; }
+  .content { padding-bottom: 32px; }
+}
+
+@media (max-width: 768px) {
+  .site-header, .site-footer {
+    padding: 16px clamp(16px, 4vw, 24px);
+  }
+  
+  .hero { padding: 24px 0 8px; }
+  .hero h1 { margin-bottom: 8px; }
+  .tagline { margin-bottom: 8px; }
+  .sub { margin-bottom: 20px; }
+  
+  .leaderboard { margin-top: 24px; }
+  .leaderboard h2 { font-size: 20px; margin-bottom: 10px; }
+  
+  .model-explanations { margin-top: 24px; }
+  .model-explanations h2 { font-size: 20px; margin-bottom: 10px; }
+  .explanation-item { padding: 15px; }
+  .explanation-item h3 { font-size: 15px; margin-bottom: 6px; }
+  .explanation-item p { font-size: 13px; }
+  
+  .lb-item { 
+    grid-template-columns: 44px 1fr; 
+    padding: 12px; 
+    gap: 12px;
+  }
   .lb-rank { width: 40px; height: 40px; }
+  .lb-rank span { font-size: 13px; }
   .lb-name { font-size: 15px; }
+  .lb-metrics { gap: 8px; }
+  .metric { padding: 5px 8px; font-size: 12px; }
+  .metric strong { font-size: 13px; }
+  .badge { font-size: 10px; padding: 3px 6px; }
+  
+  .features { grid-template-columns: 1fr; }
+  .countdown { grid-auto-flow: row; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .cd-item { padding: 12px 14px; min-width: auto; }
+  .cd-item span { font-size: 24px; }
+}
+
+@media (max-width: 480px) {
+  .site-header, .site-footer {
+    padding: 12px 16px;
+  }
+  
+  .content { padding: 0 16px 24px; }
+  
+  .hero { padding: 20px 0 8px; }
+  .tagline { font-size: clamp(14px, 4vw, 18px); }
+  .sub { font-size: 14px; }
+  
+  .leaderboard h2 { font-size: 18px; }
+  
+  .model-explanations h2 { font-size: 18px; }
+  .explanation-item { padding: 12px; }
+  .explanation-item h3 { font-size: 14px; }
+  .explanation-item p { font-size: 12px; }
+  
+  .lb-item { 
+    padding: 10px; 
+    gap: 10px;
+    grid-template-columns: 36px 1fr;
+  }
+  .lb-rank { 
+    width: 32px; 
+    height: 32px; 
+    box-shadow: 0 4px 16px -8px var(--ring), inset 0 0 0 4px rgba(255,255,255,0.02);
+  }
+  .lb-rank span { font-size: 12px; }
+  .lb-name { font-size: 14px; }
+  .lb-title { gap: 6px; }
+  .lb-metrics { gap: 6px; }
+  .metric { 
+    padding: 4px 6px; 
+    font-size: 11px; 
+    gap: 6px;
+  }
+  .metric label { font-size: 9px; }
+  .metric strong { font-size: 12px; }
+  .badge { 
+    font-size: 9px; 
+    padding: 2px 5px; 
+  }
+  
+  .countdown { 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 10px;
+    margin: 8px 0 20px;
+  }
+  .cd-item { 
+    padding: 10px 12px;
+    text-align: center;
+  }
+  .cd-item span { font-size: 20px; }
+  .cd-item label { font-size: 11px; }
+  
+  .wordmark { font-size: 16px; }
+}
+
+@media (max-width: 360px) {
+  .lb-item { padding: 8px; }
+  .lb-metrics { 
+    flex-direction: column; 
+    gap: 4px; 
+  }
+  .metric { 
+    justify-content: space-between;
+    width: 100%;
+  }
 }

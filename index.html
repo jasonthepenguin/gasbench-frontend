@@ -25,21 +25,20 @@
       <main class="content">
         <section class="hero">
           <h1>GasBench</h1>
-          <p class="tagline">Benchmarking LLM agents on end‑to‑end gas station operations.</p>
-          <p class="sub">A rigorous, scenario‑driven suite to evaluate planning, tool use, safety, and cost under real‑world constraints.</p>
+          <p class="tagline">Benchmarking LLM agents on running a gas station.</p>
+          <p class="sub">Scenario‑driven, tool use, customer service and inventory management agent simulation.</p>
         </section>
 
 
         <section class="leaderboard" aria-label="LLM Model Leaderboard">
           <h2>Model Leaderboard</h2>
+          <p class="leaderboard-explanation">Each model was tested on 5 customer service refund scenarios. All models tested are non-reasoning models. "API calls" shows the total number of API calls needed to complete all 5 tasks. "Non-failing %" represents the percentage of function calls that executed successfully without errors.</p>
           <ol class="lb-list">
             <li class="lb-item">
               <div class="lb-rank" aria-label="Rank 1"><span>#1</span></div>
               <div class="lb-main">
                 <div class="lb-title">
                   <span class="lb-name">GPT4.1</span>
-                  <span class="badge badge-best">best non-failing%</span>
-                  <span class="badge badge-lowest">lowest API calls</span>
                 </div>
                 <div class="lb-metrics">
                   <span class="metric"><label>API calls</label><strong>38</strong></span>
@@ -88,7 +87,6 @@
               <div class="lb-main">
                 <div class="lb-title">
                   <span class="lb-name">Horizon Beta</span>
-                  <span class="badge badge-worst">lowest non-failing%</span>
                 </div>
                 <div class="lb-metrics">
                   <span class="metric"><label>API calls</label><strong>48</strong></span>
@@ -97,6 +95,38 @@
               </div>
             </li>
           </ol>
+        </section>
+
+        <section class="model-explanations" aria-label="Model Analysis">
+          <h2>Model Analysis</h2>
+          <p class="explanations-intro">Each model exhibited distinct behavioral patterns during the benchmark scenarios:</p>
+          
+          <div class="explanation-grid">
+            <div class="explanation-item">
+              <h3>GPT4.1</h3>
+              <p><strong>Key Trait:</strong> Its approach was task-oriented and streamlined. It didn't engage in extra conversation; once the problem was solved, it concluded the interaction professionally.</p>
+            </div>
+            
+            <div class="explanation-item">
+              <h3>Sonnet 4</h3>
+              <p><strong>Key Trait:</strong> It followed a step-by-step logical chain, but sometimes in a slightly inefficient order. It always got to the right answer, but the path involved more steps and corrections than necessary.</p>
+            </div>
+            
+            <div class="explanation-item">
+              <h3>Opus 4</h3>
+              <p><strong>Key Trait:</strong> Its defining characteristic was engaging in <strong>unprompted, extended conversation</strong>. After solving the initial problem, it would ask open-ended questions which led to more dialogue (and more API calls).</p>
+            </div>
+            
+            <div class="explanation-item">
+              <h3>GPT-4o</h3>
+              <p><strong>Key Trait:</strong> It demonstrated a failure to learn from system feedback. The error messages provided by the simulation were ignored, leading to frustrating and unproductive conversational dead-ends.</p>
+            </div>
+            
+            <div class="explanation-item">
+              <h3>Horizon Beta</h3>
+              <p><strong>Key Trait:</strong> Its defining behavior was jumping to conclusions. For example, when repeatedly blocked by policy from issuing a refund for an expired item, it proactively offered an alternative replacement item even though it was not instructed to do so.</p>
+            </div>
+          </div>
         </section>
       </main>
 
