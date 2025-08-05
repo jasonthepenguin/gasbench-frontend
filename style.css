@@ -143,13 +143,28 @@ body {
 .lb-rank {
   width: 48px; height: 48px;
   display: grid; place-items: center;
-  border-radius: 999px;
-  background: radial-gradient(100% 100% at 30% 30%, rgba(61,220,151,0.25), rgba(0,178,255,0.18));
-  border: 1px solid rgba(255,255,255,0.12);
-  box-shadow: 0 8px 24px -12px var(--ring), inset 0 0 0 6px rgba(255,255,255,0.02);
-  color: var(--text);
+  background: var(--panel);
+  border: 2px solid rgba(255,255,255,0.08);
+  position: relative;
+  overflow: hidden;
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
 }
-.lb-rank span { font-weight: 800; letter-spacing: 0.02em; font-size: 14px; color: var(--text); opacity: 0.9; }
+.lb-rank::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: linear-gradient(135deg, transparent 30%, var(--accent), transparent 70%);
+  opacity: 0.15;
+  transform: rotate(45deg);
+}
+.lb-rank span { 
+  font-weight: 800; 
+  letter-spacing: -0.02em; 
+  font-size: 16px; 
+  color: var(--text); 
+  position: relative;
+  z-index: 1;
+}
 .lb-main { display: grid; gap: 6px; }
 .lb-title { font-weight: 700; letter-spacing: -0.01em; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .lb-name { font-weight: 800; font-size: 16px; }
@@ -233,8 +248,12 @@ body {
     padding: 12px; 
     gap: 12px;
   }
-  .lb-rank { width: 40px; height: 40px; }
-  .lb-rank span { font-size: 13px; }
+  .lb-rank { 
+    width: 40px; 
+    height: 40px; 
+    border-width: 1.5px;
+  }
+  .lb-rank span { font-size: 14px; }
   .lb-name { font-size: 15px; }
   .lb-metrics { gap: 8px; }
   .metric { padding: 5px 8px; font-size: 12px; }
@@ -273,7 +292,7 @@ body {
   .lb-rank { 
     width: 32px; 
     height: 32px; 
-    box-shadow: 0 4px 16px -8px var(--ring), inset 0 0 0 4px rgba(255,255,255,0.02);
+    border-width: 1px;
   }
   .lb-rank span { font-size: 12px; }
   .lb-name { font-size: 14px; }
