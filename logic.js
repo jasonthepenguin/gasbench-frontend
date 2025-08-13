@@ -19,25 +19,52 @@ async function loadLeaderboard() {
       // Calculate non-failing percentage
       const nonFailingPercentage = ((item.successful_actions / item.total_actions) * 100).toFixed(1);
       
-      // Extract model display name (simplify the names)
-      const modelName = item.model
-        .replace('anthropic/', '')
-        .replace('openai/', '')
-        .replace('claude-', '')
-        .replace('-latest', '')
-        .split('-')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
+      // Extract organization and model name
+      let organization = '';
+      let modelDisplayName = item.model;
+      
+      if (item.model.includes('anthropic/')) {
+        organization = 'Anthropic';
+        modelDisplayName = item.model.replace('anthropic/', '');
+      } else if (item.model.includes('openai/')) {
+        organization = 'OpenAI';
+        modelDisplayName = item.model.replace('openai/', '');
+      } else if (item.model.startsWith('gpt-')) {
+        organization = 'OpenAI';
+        modelDisplayName = item.model;
+      }
+      
+      // Format model names based on your preferences
+      let modelName = '';
+      
+      if (item.model === 'openai/gpt-4.1') {
+        modelName = 'GPT-4.1';
+      } else if (item.model === 'gpt-5-chat-latest') {
+        modelName = 'GPT-5-Chat';
+      } else if (item.model === 'openai/gpt-4o') {
+        modelName = 'GPT-4o';
+      } else {
+        // Default formatting for Claude models
+        modelName = modelDisplayName
+          .replace('claude-', '')
+          .replace('-latest', '')
+          .split('-')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
+      }
       
       li.innerHTML = `
         <div class="lb-rank" aria-label="Rank ${item.rank}"><span>#${item.rank}</span></div>
         <div class="lb-main">
           <div class="lb-title">
             <span class="lb-name">${modelName}</span>
+            ${organization ? `<span class="org-badge">${organization}</span>` : ''}
           </div>
           <div class="lb-metrics">
             <span class="metric"><label>API calls</label><strong>${item.total_api_calls_all_phases}</strong></span>
             <span class="metric"><label>Non-failing</label><strong>${nonFailingPercentage}%</strong></span>
+             <span class="metric"><label>Total Actions</label><strong>${item.total_actions}</strong></span>
+             <span class="metric"><label>Failed Actions</label><strong>${item.failed_actions}</strong></span>
           </div>
         </div>
       `;
