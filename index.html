@@ -15,7 +15,6 @@
       <header class="site-header">
         <div class="brand">
           
-          <div class="wordmark">GasBench</div>
         </div>
         <nav class="social">
           
@@ -34,97 +33,26 @@
           <h2>Model Leaderboard</h2>
           <p class="leaderboard-explanation">Each model was tested on multiple customer service refund scenarios. All models tested are non-reasoning models. "API calls" shows the total number of API calls needed to complete all tasks. "Non-failing %" represents the percentage of function calls that executed successfully without errors.</p>
           <ol class="lb-list">
-            <li class="lb-item">
-              <div class="lb-rank" aria-label="Rank 1"><span>#1</span></div>
-              <div class="lb-main">
-                <div class="lb-title">
-                  <span class="lb-name">GPT4.1</span>
-                </div>
-                <div class="lb-metrics">
-                  <span class="metric"><label>API calls</label><strong>38</strong></span>
-                  <span class="metric"><label>Non-failing</label><strong>69.6%</strong></span>
-                </div>
-              </div>
-            </li>
-            <li class="lb-item">
-              <div class="lb-rank" aria-label="Rank 2"><span>#2</span></div>
-              <div class="lb-main">
-                <div class="lb-title">
-                  <span class="lb-name">Sonnet 4</span>
-                </div>
-                <div class="lb-metrics">
-                  <span class="metric"><label>API calls</label><strong>40</strong></span>
-                  <span class="metric"><label>Non-failing</label><strong>66.7%</strong></span>
-                </div>
-              </div>
-            </li>
-            <li class="lb-item">
-              <div class="lb-rank" aria-label="Rank 3"><span>#3</span></div>
-              <div class="lb-main">
-                <div class="lb-title">
-                  <span class="lb-name">Opus 4</span>
-                </div>
-                <div class="lb-metrics">
-                  <span class="metric"><label>API calls</label><strong>52</strong></span>
-                  <span class="metric"><label>Non-failing</label><strong>68%</strong></span>
-                </div>
-              </div>
-            </li>
-            <li class="lb-item">
-              <div class="lb-rank" aria-label="Rank 4"><span>#4</span></div>
-              <div class="lb-main">
-                <div class="lb-title">
-                  <span class="lb-name">GPT-4o</span>
-                </div>
-                <div class="lb-metrics">
-                  <span class="metric"><label>API calls</label><strong>51</strong></span>
-                  <span class="metric"><label>Non-failing</label><strong>51.5%</strong></span>
-                </div>
-              </div>
-            </li>
-            <li class="lb-item">
-              <div class="lb-rank" aria-label="Rank 5"><span>#5</span></div>
-              <div class="lb-main">
-                <div class="lb-title">
-                  <span class="lb-name">Horizon Beta</span>
-                </div>
-                <div class="lb-metrics">
-                  <span class="metric"><label>API calls</label><strong>48</strong></span>
-                  <span class="metric"><label>Non-failing</label><strong>50%</strong></span>
-                </div>
-              </div>
-            </li>
+            <!-- Leaderboard items will be loaded dynamically from results.json -->
           </ol>
         </section>
 
-        <section class="model-explanations" aria-label="Model Analysis">
-          <h2>Model Analysis</h2>
-          <p class="explanations-intro">Each model exhibited distinct behavioral patterns during the benchmark scenarios:</p>
-          
-          <div class="explanation-grid">
-            <div class="explanation-item">
-              <h3>GPT4.1</h3>
-              <p><strong>Key Trait:</strong> Its approach was task-oriented and streamlined. It didn't engage in extra conversation; once the problem was solved, it concluded the interaction professionally.</p>
+        <section class="credits">
+          <h2>Created By</h2>
+          <div class="creators">
+            <div class="creator">
+              <img src="jason.jpg" alt="Jason Botterill" class="creator-photo">
+              <div class="creator-info">
+                <h3>Jason Botterill</h3>
+                <a href="https://x.com/JasonBotterill3" target="_blank" rel="noopener noreferrer">@JasonBotterill3</a>
+              </div>
             </div>
-            
-            <div class="explanation-item">
-              <h3>Sonnet 4</h3>
-              <p><strong>Key Trait:</strong> It followed a step-by-step logical chain, but sometimes in a slightly inefficient order. It always got to the right answer, but the path involved more steps and corrections than necessary.</p>
-            </div>
-            
-            <div class="explanation-item">
-              <h3>Opus 4</h3>
-              <p><strong>Key Trait:</strong> Its defining characteristic was engaging in <strong>unprompted, extended conversation</strong>. After solving the initial problem, it would ask open-ended questions which led to more dialogue (and more API calls).</p>
-            </div>
-            
-            <div class="explanation-item">
-              <h3>GPT-4o</h3>
-              <p><strong>Key Trait:</strong> It demonstrated a failure to learn from system feedback. The error messages provided by the simulation were ignored, leading to frustrating and unproductive conversational dead-ends.</p>
-            </div>
-            
-            <div class="explanation-item">
-              <h3>Horizon Beta</h3>
-              <p><strong>Key Trait:</strong> Its defining behavior was jumping to conclusions. For example, when repeatedly blocked by policy from issuing a refund for an expired item, it proactively offered an alternative replacement item even though it was not instructed to do so.</p>
+            <div class="creator">
+              <img src="chris.jpg" alt="Chris" class="creator-photo">
+              <div class="creator-info">
+                <h3>Chris</h3>
+                <a href="https://x.com/chatgpt21" target="_blank" rel="noopener noreferrer">@chatgpt21</a>
+              </div>
             </div>
           </div>
         </section>
@@ -135,8 +63,6 @@
       </footer>
     </div>
 
-    <script>
-      document.getElementById('year').textContent = new Date().getFullYear();
-    </script>
+    <script src="logic.js"></script>
   </body>
 </html>
