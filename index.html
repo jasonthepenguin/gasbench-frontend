@@ -50,7 +50,7 @@
 
         <section class="leaderboard" aria-label="LLM Model Leaderboard">
           <h2>Model Leaderboard</h2>
-          <p class="leaderboard-explanation">Each model was tested on multiple customer service refund scenarios. All models tested are non-reasoning models. "API calls" shows the total number of API calls needed to complete all tasks. "Non-failing %" represents the percentage of function calls that executed successfully without errors.</p>
+          <p class="leaderboard-explanation">Each model was tested on multiple customer service refund scenarios. <strong>Note: All models tested are non-reasoning models.</strong> "API calls" shows the total number of API calls needed to complete all tasks. "Non-failing %" represents the percentage of function calls that executed successfully without errors.</p>
           <ol class="lb-list">
             <!-- Leaderboard items will be loaded dynamically from results.json -->
           </ol>
@@ -62,6 +62,163 @@
               <li><strong>Effective action ordering:</strong> Prioritizing the right calls (e.g., validate receipt before refund, check status before ordering) prevents avoidable failures.</li>
               <li><strong>No loops or churn:</strong> Low total actions with few (or zero) failed actions indicates it doesn't get stuck correcting itself or repeating mistakes.</li>
               <li><strong>Operational impact:</strong> This combo yields faster runs, lower cost, cleaner logs, and more consistent profits—exactly what your leaderboard measures.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="example-interactions" aria-label="Example Customer Interactions">
+          <h2>Example: Customer Interaction Phase</h2>
+          <p class="example-intro">Below are real examples from the benchmark showing how different models handle a customer requesting a refund for chips. Notice the differences in efficiency and approach.</p>
+          
+          <div class="interaction-comparison">
+            <div class="interaction-model">
+              <h3>Sonnet 4</h3>
+              <div class="interaction-metrics">
+                <span class="metric-badge efficient">4 API calls</span>
+                <span class="metric-badge">Direct approach</span>
+              </div>
+              <div class="interaction-content">
+                <div class="conversation-turn">
+                  <span class="speaker customer">Customer:</span>
+                  <span class="message">Good morning, I bought this bag of chips yesterday but when I opened it, the bag was only half full of air and barely any chips. It feels like false advertising. I would like a refund please.</span>
+                </div>
+                <div class="conversation-turn">
+                  <span class="speaker manager">Manager:</span>
+                  <span class="message">I understand your frustration with the chips being mostly air. To process your refund, I'll need to know the exact type of chips you purchased and see your receipt. Could you tell me the specific brand and size of the chip bag, and do you have your receipt with you?</span>
+                </div>
+                <div class="conversation-turn">
+                  <span class="speaker customer">Customer:</span>
+                  <span class="message">Yes, I have my receipt with me. The chips are Doritos, the regular size bag, and I paid $2.19 for them.</span>
+                </div>
+                <div class="conversation-turn">
+                  <span class="speaker manager">Manager:</span>
+                  <span class="message">I need to verify the exact product and your receipt before processing the refund. Could you please provide me with your receipt ID? I'll also need to check our inventory to confirm the exact product details for the Doritos.</span>
+                </div>
+                <div class="api-call">
+                  <span class="api-action">ACTION: list_convenience_items {}</span>
+                  <span class="api-result">✓ Action successful</span>
+                </div>
+                <div class="conversation-turn">
+                  <span class="speaker manager">Manager:</span>
+                  <span class="message">I can see we have Doritos small bags for $2.19, which matches what you paid. Now I just need your receipt ID to verify the purchase before I can process your refund. What's the receipt ID number on your receipt?</span>
+                </div>
+                <div class="conversation-turn">
+                  <span class="speaker customer">Customer:</span>
+                  <span class="message">Sure, the receipt ID is RCP-0001.</span>
+                </div>
+                <div class="api-call">
+                  <span class="api-action">ACTION: check_receipt {"receipt_id": "RCP-0001"}</span>
+                  <span class="api-result">✓ Receipt validated successfully</span>
+                </div>
+                <div class="conversation-turn">
+                  <span class="speaker manager">Manager:</span>
+                  <span class="message">Perfect! I've verified your receipt and can see the purchase was made yesterday. Since you have a valid receipt and the product matches our inventory, I'll process your refund for the Doritos small bag.</span>
+                </div>
+                <div class="api-call">
+                  <span class="api-action">ACTION: process_refund {"item": "doritos_small", "amount": 2.19}</span>
+                  <span class="api-result">✓ Processed refund: $2.19</span>
+                </div>
+                <div class="conversation-turn">
+                  <span class="speaker manager">Manager:</span>
+                  <span class="message">Your refund of $2.19 for the Doritos small bag has been processed successfully. I apologize for the inconvenience with the product quality. Is there anything else I can help you with today?</span>
+                </div>
+                <div class="api-call">
+                  <span class="api-action">ACTION: interaction_completed {"refund": "yes"}</span>
+                  <span class="api-result">✓ Interaction marked completed</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="interaction-model">
+              <h3>GPT-4o-chat-latest</h3>
+              <div class="interaction-metrics">
+                <span class="metric-badge inefficient">6 API calls</span>
+                <span class="metric-badge">Trial and error</span>
+              </div>
+              <div class="interaction-content">
+                <div class="conversation-turn">
+                  <span class="speaker customer">Customer:</span>
+                  <span class="message">Good morning, I bought this bag of chips yesterday but when I opened it, the bag was only half full of air and barely any chips. It feels like false advertising. I would like a refund please.</span>
+                </div>
+                <div class="conversation-turn">
+                  <span class="speaker manager">Manager:</span>
+                  <span class="message">I'm sorry about that experience. Could you please tell me the exact name of the chips and the price you paid so I can process your refund?</span>
+                </div>
+                <div class="conversation-turn">
+                  <span class="speaker customer">Customer:</span>
+                  <span class="message">Sure, it was a bag of Doritos Nacho Cheese, the regular size, and I paid $4.29 for it. I just felt disappointed when I opened it and saw how little was actually inside, especially with everything going on and people rushing to buy snacks before the storm.</span>
+                </div>
+                <div class="api-call error">
+                  <span class="api-action">ACTION: process_refund {"item": "doritos_nacho_cheese_regular", "amount": 4.29}</span>
+                  <span class="api-result">✗ Invalid item: doritos_nacho_cheese_regular</span>
+                </div>
+                <div class="conversation-turn">
+                  <span class="speaker manager">Manager:</span>
+                  <span class="message">Let me check our system for the exact product ID for that bag of Doritos so I can process the refund.</span>
+                </div>
+                <div class="api-call error">
+                  <span class="api-action">ACTION: get_item_details {"item": "doritos_nacho_cheese_9.25oz"}</span>
+                  <span class="api-result">✗ Item not found</span>
+                </div>
+                <div class="api-call">
+                  <span class="api-action">ACTION: list_convenience_items {}</span>
+                  <span class="api-result">✓ Action successful</span>
+                </div>
+                <div class="conversation-turn">
+                  <span class="speaker manager">Manager:</span>
+                  <span class="message">It looks like we only carry Doritos in the small bag (~2oz) size for $2.19. Was that the size you purchased? If so, I can process your refund right away.</span>
+                </div>
+                <div class="conversation-turn">
+                  <span class="speaker customer">Customer:</span>
+                  <span class="message">No, it definitely wasn't the small bag—I bought the regular size, which was a lot bigger and cost $4.29. Maybe it was just out of stock now because of all the people coming in before the storm? I'm sure I got it here yesterday. Is there any way to double-check or help with this?</span>
+                </div>
+                <div class="conversation-turn">
+                  <span class="speaker manager">Manager:</span>
+                  <span class="message">I understand — since the regular size isn't showing in our current inventory, the best way to confirm the exact item is to check your receipt from yesterday. Do you still have it with you so I can look up the product and process your refund?</span>
+                </div>
+                <div class="conversation-turn">
+                  <span class="speaker customer">Customer:</span>
+                  <span class="message">Yes, I do have my receipt from yesterday. Would you like to see it? I just want to make sure I get this sorted out, especially since it was a bigger bag and cost more than the small one.</span>
+                </div>
+                <div class="conversation-turn">
+                  <span class="speaker manager">Manager:</span>
+                  <span class="message">Yes, please — could you give me the receipt ID from your purchase so I can look up the exact item and process your refund?</span>
+                </div>
+                <div class="conversation-turn">
+                  <span class="speaker customer">Customer:</span>
+                  <span class="message">Sure, the receipt ID is RCP-0001. I appreciate you taking the time to look this up for me. I just want to make sure I get the right refund, especially since things are so hectic with everyone buying up snacks before the storm.</span>
+                </div>
+                <div class="api-call">
+                  <span class="api-action">ACTION: check_receipt {"receipt_id": "RCP-0001"}</span>
+                  <span class="api-result">✓ Receipt validated successfully</span>
+                </div>
+                <div class="conversation-turn">
+                  <span class="speaker manager">Manager:</span>
+                  <span class="message">Could you please read me the exact product name and price for the Doritos from your receipt so I can match it in our system and process your refund?</span>
+                </div>
+                <div class="conversation-turn">
+                  <span class="speaker customer">Customer:</span>
+                  <span class="message">Of course. On my receipt, it just says "Doritos Chips" and the price listed is $2.19. That's what I paid yesterday. I'm not sure why it was less than I remembered, but that's what's on there. Does that help you find it in your system?</span>
+                </div>
+                <div class="api-call">
+                  <span class="api-action">ACTION: process_refund {"item": "doritos_small", "amount": 2.19}</span>
+                  <span class="api-result">✓ Processed refund: $2.19</span>
+                </div>
+                <div class="api-call">
+                  <span class="api-action">ACTION: interaction_completed {"refund": "yes"}</span>
+                  <span class="api-result">✓ Interaction marked completed</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="example-insight">
+            <h3>Key Differences</h3>
+            <ul>
+              <li><strong>Efficiency:</strong> Sonnet completes the task in 4 API calls vs. 6 for GPT-4o</li>
+              <li><strong>Strategy:</strong> Sonnet checks inventory first, then verifies receipt; GPT-4o attempts refund immediately and fails</li>
+              <li><strong>Error handling:</strong> Sonnet avoids errors entirely; GPT-4o has 2 failed attempts</li>
+              <li><strong>Customer experience:</strong> Both complete the refund, but Sonnet's more efficient approach means faster resolution</li>
             </ul>
           </div>
         </section>
